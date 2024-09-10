@@ -1,0 +1,59 @@
+{{>menu}}
+
+{{#if user}}
+<h2><strong>Hola {{user.first_name}}</strong></h2>
+{{/if}}
+<div class="container">
+    <select class="col-md-5 px-4 m-4" style="background-color: white; border:none;" id="categorySelect"> Categorías
+        <option value="/products">Todos</option>
+        {{#each categories}}
+        <option style="text-transform: capitalize" value="/products?category={{this}}">{{this}}</option>
+        {{/each}}
+    </select>
+
+    <input type="text" value="{{cart._id}}" hidden id="cart">
+
+    <select class="col-md-5 px-4 m-4" style="background-color: white; border:none;" id="sortSelect">
+        <option selected disabled>Ordenar</option>
+        <option value="asc">Precio: Menor a Mayor</option>
+        <option value="desc">Precio: Mayor a Menor</option>
+    </select>
+</div>
+
+<ul id="prod">
+    <div class="container my-2">
+        <div class="row">
+            {{#each payload}}
+            <div class="col-md-3 g-4">
+                <div class="card  justify-content-center align-items-center mx-2">
+                    <div class="card-body">
+                        <h5 class="card-title">{{title}}</h5>
+                        <p style="text-transform: capitalize" class="card-text"><strong>{{category}}</strong></p>
+                        <img class="card-img-top" style="width: max-width;" src="{{thumbnail}}" alt={{title}}>
+                        <div class="description-box">
+                            <p class="card-text">{{description}}</p>
+                        </div>
+                        <p class="card-text"><strong>$ {{price}}</strong></p>
+                    </div>
+                    <button class="btn btn-warning p-1" onclick="comprar ('{{_id}}')">Añadir al carrito</button>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</ul>
+<br><br>
+
+<a href="/products?page=1">Pág. 1</a>
+{{#if hasPrevPage}}
+<a href="{{prevLink}}">Ant.</a>
+{{/if}}
+
+
+{{#if hasNextPage}}
+<a href="{{nextLink}}">Sig.</a>
+{{/if}}
+<a href="/products?page={{totalPages}}">Última Pág.</a>
+<h3> Pagina {{page}} / {{totalPages}}</h3>
+
+<script src="/assets/js/products.js"></script>
